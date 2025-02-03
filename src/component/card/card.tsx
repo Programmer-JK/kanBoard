@@ -1,4 +1,5 @@
-import { CardProps, getTagColorClass } from "@/type/common";
+import { CardProps } from "@/type/common";
+import { getTagColorClass } from "@/util/common";
 
 const Card = ({ tag, contents }: CardProps) => {
   return (

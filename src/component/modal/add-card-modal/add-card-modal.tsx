@@ -1,4 +1,5 @@
-import { ChildrenModalProps, getTagColorClass } from "@/type/common";
+import { ChildrenModalProps } from "@/type/common";
+import { getTagColorClass } from "@/util/common";
 
 const AddCardModal = ({ onClose }: ChildrenModalProps) => {
   const demoColumnList = [
