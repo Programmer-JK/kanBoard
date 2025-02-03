@@ -1,8 +1,13 @@
+import Header from "@/component/header/header";
+
 function App() {
   return (
-    <div className="min-h-screen w-full flex justify-center items-center">
-      Project Init
-    </div>
+    <>
+      <Header></Header>
+      <div className="min-h-screen w-full flex justify-center items-center">
+        Project Init
+      </div>
+    </>
   );
 }
 
