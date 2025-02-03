@@ -2,42 +2,67 @@ import { PencilLine, Plus } from "lucide-react";
 import AddCard from "../add_card/add_card";
 import Card from "../card/card";
 import { useEffect, useRef, useState } from "react";
+import Modal from "../modal/modal";
+import AddCardModal from "../modal/add-card-modal/add-card-modal";
+import AddColumnModal from "../modal/add-column-modal/add-column-modal";
 
 const Board = () => {
-  const openCreateColumnHandler = () => {
-    console.log("openCreateColumnHandler");
-  };
-  const demoTodoList = [
-    {
-      tag: [
-        {
-          color: "purple",
-          text: "관리자페이지",
-        },
-        {
-          color: "purple",
-          text: "관리자페이지",
-        },
-        {
-          color: "blue",
-          text: "문서화",
-        },
-      ],
-      contents: "회원을 블랙리스트로 지정할 수 있는 기능을 제작합니다.",
-    },
-    {
-      tag: [
-        {
-          color: "blue",
-          text: "문서화",
-        },
-      ],
-      contents: "디자인시스템 2.1 버전로그를 작성합니다.",
-    },
+  const demoColumnList = [
+    // {
+    //   tag: [
+    //     {
+    //       color: "purple",
+    //       text: "관리자페이지",
+    //     },
+    //     {
+    //       color: "purple",
+    //       text: "관리자페이지",
+    //     },
+    //     {
+    //       color: "blue",
+    //       text: "문서화",
+    //     },
+    //   ],
+    //   contents: "회원을 블랙리스트로 지정할 수 있는 기능을 제작합니다.",
+    // },
+    // {
+    //   tag: [
+    //     {
+    //       color: "blue",
+    //       text: "문서화",
+    //     },
+    //   ],
+    //   contents: "디자인시스템 2.1 버전로그를 작성합니다.",
+    // },
   ];
   const [availableChange, setAvailableChange] = useState(false);
   const [projectTitle, setProjectTitle] = useState("Project No.1");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const inputRef = useRef(null);
+  const [modalType, setModalType] = useState("");
+
+  const openCreateColumnHandler = () => {
+    console.log("openCreateColumnHandler");
+    setModalType("column");
+    setIsModalOpen(true);
+  };
+
+  const openCreateCardHandler = () => {
+    console.log("openCreateCardHandler");
+    setModalType("card");
+    setIsModalOpen(true);
+  };
+
+  const renderModalContent = () => {
+    switch (modalType) {
+      case "card":
+        return <AddCardModal onClose={() => {}} />;
+      case "column":
+        return <AddColumnModal onClose={() => {}} />;
+      default:
+        return <></>;
+    }
+  };
 
   const changeProjectTitleHandler = (e) => {
     setProjectTitle(e.target.value);
@@ -45,7 +70,10 @@ const Board = () => {
 
   useEffect(() => {
     if (availableChange) {
-      inputRef!.current.focus();
+      if (!inputRef.current) return;
+      else {
+        inputRef.current.focus();
+      }
     }
   }, [availableChange]);
 
@@ -67,8 +95,8 @@ const Board = () => {
       <div className="grid grid-cols-5 h-screen pt-8">
         <div className="col-span-1 bg-red-300 p-2">
           <div className="w-full my-1 p-2 text-xl font-bold">시작 전</div>
-          {demoTodoList.length !== 0 ? (
-            demoTodoList.map((item, idx) => (
+          {demoColumnList.length !== 0 ? (
+            demoColumnList.map((item, idx) => (
               <Card
                 key={idx.toString()}
                 tag={item.tag}
@@ -76,7 +104,7 @@ const Board = () => {
               ></Card>
             ))
           ) : (
-            <AddCard />
+            <AddCard onClick={openCreateCardHandler} />
           )}
         </div>
         <div className="col-span-1 bg-blue-300 p-2">
@@ -94,6 +122,9 @@ const Board = () => {
           </button>
         </div>
       </div>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        {renderModalContent()}
+      </Modal>
     </div>
   );
 };
