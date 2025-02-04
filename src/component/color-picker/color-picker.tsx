@@ -1,7 +1,8 @@
+import { ColorPickerProps } from "@/type/common";
 import { getTagColorClass } from "@/util/common";
 import { useState } from "react";
 
-const ColorPicker = ({ onColorSelect }) => {
+const ColorPicker = ({ onColorSelect }: ColorPickerProps) => {
   const [selectedColor, setSelectedColor] = useState("");
 
   const colors = [
@@ -15,7 +16,7 @@ const ColorPicker = ({ onColorSelect }) => {
     "pink",
   ];
 
-  const handleColorClick = (color) => {
+  const handleColorClick = (color: string) => {
     setSelectedColor(color);
     onColorSelect(color);
   };
@@ -39,9 +40,7 @@ const ColorPicker = ({ onColorSelect }) => {
                 : "hover:scale-105"
             }
           `}
-        >
-          {name}
-        </button>
+        ></button>
       ))}
     </div>
   );

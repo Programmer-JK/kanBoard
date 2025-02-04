@@ -5,6 +5,15 @@ export interface TagTypes {
   text: string;
 }
 
+export interface ColumnTypes {
+  tags: TagTypes[];
+  content: string;
+}
+
+export interface ColorPickerProps {
+  onColorSelect: (color: string) => void;
+}
+
 export interface AddCardProps {
   onClick: MouseEventHandler<HTMLButtonElement>;
 }

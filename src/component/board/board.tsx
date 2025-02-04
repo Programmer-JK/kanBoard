@@ -9,7 +9,7 @@ import AddColumnModal from "../modal/add-column-modal/add-column-modal";
 const Board = () => {
   const demoColumnList = [
     // {
-    //   tag: [
+    //   tags: [
     //     {
     //       color: "purple",
     //       text: "관리자페이지",
@@ -23,16 +23,16 @@ const Board = () => {
     //       text: "문서화",
     //     },
     //   ],
-    //   contents: "회원을 블랙리스트로 지정할 수 있는 기능을 제작합니다.",
+    //   content: "회원을 블랙리스트로 지정할 수 있는 기능을 제작합니다.",
     // },
     // {
-    //   tag: [
+    //   tags: [
     //     {
     //       color: "blue",
     //       text: "문서화",
     //     },
     //   ],
-    //   contents: "디자인시스템 2.1 버전로그를 작성합니다.",
+    //   content: "디자인시스템 2.1 버전로그를 작성합니다.",
     // },
   ];
   const [availableChange, setAvailableChange] = useState(false);
@@ -94,7 +94,17 @@ const Board = () => {
       </div>
       <div className="grid grid-cols-5 h-screen pt-8">
         <div className="col-span-1 bg-red-300 p-2">
-          <div className="w-full my-1 p-2 text-xl font-bold">시작 전</div>
+          <div className="flex flex-row justify-between items-center w-full my-1 p-2 text-xl font-bold">
+            <div className="flex flex-row items-center gap-2">
+              <span>시작 전</span>
+              <span className="min-w-5 h-5 p-1 flex items-center justify-center text-sm bg-gray-200 rounded-full">
+                5
+              </span>
+            </div>
+            <button className="flex bg-gray-200 rounded-full w-7 h-5 items-center justify-center">
+              <Plus size={16} />
+            </button>
+          </div>
           {demoColumnList.length !== 0 ? (
             demoColumnList.map((item, idx) => (
               <Card
@@ -108,10 +118,30 @@ const Board = () => {
           )}
         </div>
         <div className="col-span-1 bg-blue-300 p-2">
-          <div className="w-full my-1 p-2 text-xl font-bold">진행 중</div>
+          <div className="flex flex-row justify-between items-center w-full my-1 p-2 text-xl font-bold">
+            <div className="flex flex-row items-center gap-2">
+              <span>진행 중</span>
+              <span className="min-w-5 h-5 p-1 flex items-center justify-center text-sm bg-gray-200 rounded-full">
+                5
+              </span>
+            </div>
+            <button className="flex bg-gray-200 rounded-full w-7 h-5 items-center justify-center">
+              <Plus size={16} />
+            </button>
+          </div>
         </div>
         <div className="col-span-1 bg-green-300 p-2">
-          <div className="w-full my-1 p-2 text-xl font-bold">완료</div>
+          <div className="flex flex-row justify-between items-center w-full my-1 p-2 text-xl font-bold">
+            <div className="flex flex-row items-center gap-2">
+              <span>완료 </span>
+              <span className="min-w-5 h-5 p-1 flex items-center justify-center text-sm bg-gray-200 rounded-full">
+                5
+              </span>
+            </div>
+            <button className="flex bg-gray-200 rounded-full w-7 h-5 items-center justify-center">
+              <Plus size={16} />
+            </button>
+          </div>
         </div>
         <div className="flex flex-col col-span-2 bg-purple-300 p-2 mr-16">
           <button

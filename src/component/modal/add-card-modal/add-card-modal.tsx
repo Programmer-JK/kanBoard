@@ -1,10 +1,12 @@
-import { ChildrenModalProps } from "@/type/common";
+import { ChildrenModalProps, ColumnTypes } from "@/type/common";
 import { getTagColorClass } from "@/util/common";
+import { useState } from "react";
 
 const AddCardModal = ({ onClose }: ChildrenModalProps) => {
+  const [selectedColumn, setSelectedColumn] = useState({} as ColumnTypes);
   const demoColumnList = [
     {
-      tag: [
+      tags: [
         {
           color: "purple",
           text: "관리자페이지",
@@ -18,62 +20,45 @@ const AddCardModal = ({ onClose }: ChildrenModalProps) => {
           text: "문서화",
         },
       ],
-      contents: "회원을 블랙리스트로 지정할 수 있는 기능을 제작합니다.",
+      content: "회원을 블랙리스트로 지정할 수 있는 기능을 제작합니다.",
     },
     {
-      tag: [
+      tags: [
         {
           color: "blue",
           text: "문서화",
         },
       ],
-      contents: "디자인시스템 2.1 버전로그를 작성합니다.",
+      content: "디자인시스템 2.1 버전로그를 작성합니다.",
     },
     {
-      tag: [
+      tags: [
         {
           color: "blue",
           text: "문서화",
         },
       ],
-      contents: "디자인시스템 2.1 버전로그를 작성합니다.",
+      content: "디자인시스템 2.1 버전로그를 작성합니다.",
     },
     {
-      tag: [
+      tags: [
         {
           color: "blue",
           text: "문서화",
         },
       ],
-      contents: "디자인시스템 2.1 버전로그를 작성합니다.",
+      content: "디자인시스템 2.1 버전로그를 작성합니다.",
     },
     {
-      tag: [
+      tags: [
         {
           color: "blue",
           text: "문서화",
         },
       ],
-      contents: "디자인시스템 2.1 버전로그를 작성합니다.",
+      content: "디자인시스템 2.1 버전로그를 작성합니다.",
     },
   ];
-  const selectedColumn = {
-    tag: [
-      {
-        color: "purple",
-        text: "관리자페이지",
-      },
-      {
-        color: "purple",
-        text: "관리자페이지",
-      },
-      {
-        color: "blue",
-        text: "문서화",
-      },
-    ],
-    contents: "회원을 블랙리스트로 지정할 수 있는 기능을 제작합니다.",
-  };
   return (
     <div className="flex flex-col gap-2 w-full max-w-lg">
       <h2 className="text-lg font-bold mb-4">카드 추가</h2>
@@ -84,10 +69,11 @@ const AddCardModal = ({ onClose }: ChildrenModalProps) => {
           <div
             key={idx}
             className="flex flex-col hover:bg-gray-200 p-1 rounded-md border border-gray-200"
+            onClick={() => setSelectedColumn(column)}
           >
             <div className="flex flex-row">
-              {column.tag &&
-                column.tag.map((item, idx) => (
+              {column.tags &&
+                column.tags.map((item, idx) => (
                   <span
                     key={idx}
                     className={`w-fit my-0.5 mx-1 rounded px-1 font-bold ${getTagColorClass(
@@ -98,26 +84,26 @@ const AddCardModal = ({ onClose }: ChildrenModalProps) => {
                   </span>
                 ))}
             </div>
-            {column.contents}
+            {column.content}
           </div>
         ))}
       </div>
       <div className="font-bold">선택한 column : </div>
       <div className="flex flex-col bg-white w-full h-fit content-center rounded-md px-2 py-1">
         <div className="flex flex-row">
-          {selectedColumn.tag &&
-            selectedColumn.tag.map((item, idx) => (
+          {selectedColumn.tags &&
+            selectedColumn.tags.map((tag, idx) => (
               <span
                 key={idx}
                 className={`w-fit my-0.5 mx-1 rounded px-1 font-bold ${getTagColorClass(
-                  item.color
+                  tag.color
                 )}`}
               >
-                {item.text}
+                {tag.text}
               </span>
             ))}
         </div>
-        {selectedColumn.contents}
+        {selectedColumn.content}
       </div>
 
       {/* 버튼 영역 */}

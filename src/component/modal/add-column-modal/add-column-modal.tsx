@@ -1,25 +1,24 @@
 import ColorPicker from "@/component/color-picker/color-picker";
-import { ChildrenModalProps } from "@/type/common";
+import { ChildrenModalProps, TagTypes } from "@/type/common";
 import { useState } from "react";
 
 const AddColumnModal = ({ onClose }: ChildrenModalProps) => {
   const [color, setColor] = useState("");
   const [tagName, setTagName] = useState("");
-  const [columnContent, setColumnContent] = useState("");
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState([] as TagTypes[]);
 
-  const handleColorSelect = (selectedColor) => {
+  const handleColorSelect = (selectedColor: string) => {
     setColor(selectedColor);
   };
 
   const handleAddTag = () => {
     if (tagName && color) {
-      setTags([...tags, { text: tagName, color }]);
+      setTags([...tags, { text: tagName, color: color }]);
       setTagName("");
     }
   };
 
-  const handleRemoveTag = (index) => {
+  const handleRemoveTag = (index: number) => {
     setTags(tags.filter((_, idx) => idx !== index));
   };
 
