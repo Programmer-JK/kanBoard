@@ -11,3 +11,7 @@ export const getTagColorClass = (color: string) => {
   };
   return colorMap[color] || "bg-gray-300/30 text-gray-700";
 };
+
+export const generateSimpleId = () => {
+  return Date.now().toString();
+};

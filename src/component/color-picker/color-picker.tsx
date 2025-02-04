@@ -1,20 +1,10 @@
+import { TAG_COLORS } from "@/const/common";
 import { ColorPickerProps } from "@/type/common";
 import { getTagColorClass } from "@/util/common";
 import { useState } from "react";
 
 const ColorPicker = ({ onColorSelect }: ColorPickerProps) => {
   const [selectedColor, setSelectedColor] = useState("");
-
-  const colors = [
-    "red",
-    "orange",
-    "yellow",
-    "blue",
-    "green",
-    "purple",
-    "gray",
-    "pink",
-  ];
 
   const handleColorClick = (color: string) => {
     setSelectedColor(color);
@@ -23,19 +13,19 @@ const ColorPicker = ({ onColorSelect }: ColorPickerProps) => {
 
   return (
     <div className="flex flex-wrap gap-4 px-1">
-      {colors.map((name) => (
+      {TAG_COLORS.map((color) => (
         <button
-          key={name}
-          onClick={() => handleColorClick(name)}
+          key={color}
+          onClick={() => handleColorClick(color)}
           className={`
-            ${getTagColorClass(name)} 
+            ${getTagColorClass(color)} 
             px-4 py-2 
             rounded-md 
             outline
             transition-all 
             duration-200 
             ${
-              selectedColor === name
+              selectedColor === color
                 ? "scale-110 shadow-lg ring-2 ring-offset-2"
                 : "hover:scale-105"
             }

@@ -12,9 +12,14 @@ export interface ColumnTypes {
   content: string;
 }
 
-export interface ProjectBoard {
-  projectName: string;
-  projectColumn: ColumnTypes[];
+export interface ProjectBoardTypes {
+  name: string;
+  columns: {
+    pending: ColumnTypes[];
+    planned: ColumnTypes[];
+    ongoing: ColumnTypes[];
+    completed: ColumnTypes[];
+  };
 }
 
 export interface ColorPickerProps {
