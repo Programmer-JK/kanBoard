@@ -6,6 +6,8 @@ export interface TagTypes {
 }
 
 export interface ColumnTypes {
+  id: string;
+  state: string;
   tags: TagTypes[];
   content: string;
 }

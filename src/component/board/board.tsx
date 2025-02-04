@@ -8,32 +8,32 @@ import AddColumnModal from "../modal/add-column-modal/add-column-modal";
 
 const Board = () => {
   const demoColumnList = [
-    // {
-    //   tags: [
-    //     {
-    //       color: "purple",
-    //       text: "관리자페이지",
-    //     },
-    //     {
-    //       color: "purple",
-    //       text: "관리자페이지",
-    //     },
-    //     {
-    //       color: "blue",
-    //       text: "문서화",
-    //     },
-    //   ],
-    //   content: "회원을 블랙리스트로 지정할 수 있는 기능을 제작합니다.",
-    // },
-    // {
-    //   tags: [
-    //     {
-    //       color: "blue",
-    //       text: "문서화",
-    //     },
-    //   ],
-    //   content: "디자인시스템 2.1 버전로그를 작성합니다.",
-    // },
+    {
+      tags: [
+        {
+          color: "purple",
+          text: "관리자페이지",
+        },
+        {
+          color: "purple",
+          text: "관리자페이지",
+        },
+        {
+          color: "blue",
+          text: "문서화",
+        },
+      ],
+      content: "회원을 블랙리스트로 지정할 수 있는 기능을 제작합니다.",
+    },
+    {
+      tags: [
+        {
+          color: "blue",
+          text: "문서화",
+        },
+      ],
+      content: "디자인시스템 2.1 버전로그를 작성합니다.",
+    },
   ];
   const [availableChange, setAvailableChange] = useState(false);
   const [projectTitle, setProjectTitle] = useState("Project No.1");
@@ -43,21 +43,21 @@ const Board = () => {
 
   const openCreateColumnHandler = () => {
     console.log("openCreateColumnHandler");
-    setModalType("column");
+    setModalType("addColumn");
     setIsModalOpen(true);
   };
 
   const openCreateCardHandler = () => {
     console.log("openCreateCardHandler");
-    setModalType("card");
+    setModalType("addCard");
     setIsModalOpen(true);
   };
 
   const renderModalContent = () => {
     switch (modalType) {
-      case "card":
+      case "addCard":
         return <AddCardModal onClose={() => {}} />;
-      case "column":
+      case "addColumn":
         return <AddColumnModal onClose={() => {}} />;
       default:
         return <></>;
@@ -109,8 +109,8 @@ const Board = () => {
             demoColumnList.map((item, idx) => (
               <Card
                 key={idx.toString()}
-                tag={item.tag}
-                contents={item.contents}
+                tag={item.tags}
+                contents={item.content}
               ></Card>
             ))
           ) : (
