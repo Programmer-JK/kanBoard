@@ -1,42 +1,15 @@
-import { PencilLine, Plus } from "lucide-react";
-import AddCard from "../add_card/add_card";
-import Card from "../card/card";
+import { PencilLine } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import Modal from "../modal/modal";
-import AddCardModal from "../modal/add-card-modal/add-card-modal";
-import AddColumnModal from "../modal/add-column-modal/add-column-modal";
 import { useKanStore } from "@/store/store";
+import OngoingList from "./ongoing-list/ongoing-list";
+import CompletedList from "./completed-list/completed-list";
+import PlannedList from "./planned-list/planned-list";
+import PendingList from "./pending-list/pending-list";
 
 const Board = () => {
   const { projectBoard, setProjectName } = useKanStore();
   const [availableChange, setAvailableChange] = useState(false);
-  // const [projectTitle, setProjectTitle] = useState("Project No.1");
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const inputRef = useRef(null);
-  const [modalType, setModalType] = useState("");
-
-  const openCreateColumnHandler = () => {
-    console.log("openCreateColumnHandler");
-    setModalType("addColumn");
-    setIsModalOpen(true);
-  };
-
-  const openCreateCardHandler = () => {
-    console.log("openCreateCardHandler");
-    setModalType("addCard");
-    setIsModalOpen(true);
-  };
-
-  const renderModalContent = () => {
-    switch (modalType) {
-      case "addCard":
-        return <AddCardModal onClose={() => {}} />;
-      case "addColumn":
-        return <AddColumnModal onClose={() => {}} />;
-      default:
-        return <></>;
-    }
-  };
 
   const changeProjectTitleHandler = (e) => {
     setProjectName(e.target.value);
@@ -57,7 +30,7 @@ const Board = () => {
         <input
           className="bg-[#f8f8f8] outline-none"
           ref={inputRef}
-          value={projectBoard.projectName}
+          value={projectBoard.name}
           onChange={changeProjectTitleHandler}
           disabled={!availableChange}
           onBlur={() => setAvailableChange(false)}
@@ -67,68 +40,11 @@ const Board = () => {
         </button>
       </div>
       <div className="grid grid-cols-5 h-screen pt-8">
-        <div className="col-span-1 bg-red-300 p-2">
-          <div className="flex flex-row justify-between items-center w-full my-1 p-2 text-xl font-bold">
-            <div className="flex flex-row items-center gap-2">
-              <span>시작 전</span>
-              <span className="min-w-5 h-5 p-1 flex items-center justify-center text-sm bg-gray-200 rounded-full">
-                5
-              </span>
-            </div>
-            <button className="flex bg-gray-200 rounded-full w-7 h-5 items-center justify-center">
-              <Plus size={16} />
-            </button>
-          </div>
-          {projectBoard.projectColumn.length !== 0 ? (
-            projectBoard.projectColumn.map((item, idx) => (
-              <Card
-                key={idx.toString()}
-                tag={item.tags}
-                contents={item.content}
-              ></Card>
-            ))
-          ) : (
-            <AddCard onClick={openCreateCardHandler} />
-          )}
-        </div>
-        <div className="col-span-1 bg-blue-300 p-2">
-          <div className="flex flex-row justify-between items-center w-full my-1 p-2 text-xl font-bold">
-            <div className="flex flex-row items-center gap-2">
-              <span>진행 중</span>
-              <span className="min-w-5 h-5 p-1 flex items-center justify-center text-sm bg-gray-200 rounded-full">
-                5
-              </span>
-            </div>
-            <button className="flex bg-gray-200 rounded-full w-7 h-5 items-center justify-center">
-              <Plus size={16} />
-            </button>
-          </div>
-        </div>
-        <div className="col-span-1 bg-green-300 p-2">
-          <div className="flex flex-row justify-between items-center w-full my-1 p-2 text-xl font-bold">
-            <div className="flex flex-row items-center gap-2">
-              <span>완료 </span>
-              <span className="min-w-5 h-5 p-1 flex items-center justify-center text-sm bg-gray-200 rounded-full">
-                5
-              </span>
-            </div>
-            <button className="flex bg-gray-200 rounded-full w-7 h-5 items-center justify-center">
-              <Plus size={16} />
-            </button>
-          </div>
-        </div>
-        <div className="flex flex-col col-span-2 bg-purple-300 p-2 mr-16">
-          <button
-            className="w-fit my-1 p-2 flex flex-row justify-center items-center gap-2 bg-gray-100 text-gray-500 rounded-lg font-medium text-sm hover:bg-gray-200 hover:outline-gray-400"
-            onClick={openCreateColumnHandler}
-          >
-            <Plus size={14} /> Add another list
-          </button>
-        </div>
+        <PlannedList />
+        <OngoingList />
+        <CompletedList />
+        <PendingList />
       </div>
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        {renderModalContent()}
-      </Modal>
     </div>
   );
 };
