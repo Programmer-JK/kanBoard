@@ -12,6 +12,11 @@ export interface ColumnTypes {
   content: string;
 }
 
+export interface ProjectBoard {
+  projectName: string;
+  projectColumn: ColumnTypes[];
+}
+
 export interface ColorPickerProps {
   onColorSelect: (color: string) => void;
 }
