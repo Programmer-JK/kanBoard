@@ -5,38 +5,12 @@ import { useEffect, useRef, useState } from "react";
 import Modal from "../modal/modal";
 import AddCardModal from "../modal/add-card-modal/add-card-modal";
 import AddColumnModal from "../modal/add-column-modal/add-column-modal";
+import { useKanStore } from "@/store/store";
 
 const Board = () => {
-  const demoColumnList = [
-    {
-      tags: [
-        {
-          color: "purple",
-          text: "관리자페이지",
-        },
-        {
-          color: "purple",
-          text: "관리자페이지",
-        },
-        {
-          color: "blue",
-          text: "문서화",
-        },
-      ],
-      content: "회원을 블랙리스트로 지정할 수 있는 기능을 제작합니다.",
-    },
-    {
-      tags: [
-        {
-          color: "blue",
-          text: "문서화",
-        },
-      ],
-      content: "디자인시스템 2.1 버전로그를 작성합니다.",
-    },
-  ];
+  const { projectBoard, setProjectName } = useKanStore();
   const [availableChange, setAvailableChange] = useState(false);
-  const [projectTitle, setProjectTitle] = useState("Project No.1");
+  // const [projectTitle, setProjectTitle] = useState("Project No.1");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const inputRef = useRef(null);
   const [modalType, setModalType] = useState("");
@@ -65,7 +39,7 @@ const Board = () => {
   };
 
   const changeProjectTitleHandler = (e) => {
-    setProjectTitle(e.target.value);
+    setProjectName(e.target.value);
   };
 
   useEffect(() => {
@@ -83,7 +57,7 @@ const Board = () => {
         <input
           className="bg-[#f8f8f8] outline-none"
           ref={inputRef}
-          value={projectTitle}
+          value={projectBoard.projectName}
           onChange={changeProjectTitleHandler}
           disabled={!availableChange}
           onBlur={() => setAvailableChange(false)}
@@ -105,8 +79,8 @@ const Board = () => {
               <Plus size={16} />
             </button>
           </div>
-          {demoColumnList.length !== 0 ? (
-            demoColumnList.map((item, idx) => (
+          {projectBoard.projectColumn.length !== 0 ? (
+            projectBoard.projectColumn.map((item, idx) => (
               <Card
                 key={idx.toString()}
                 tag={item.tags}
