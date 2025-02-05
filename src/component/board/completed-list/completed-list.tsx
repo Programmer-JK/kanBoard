@@ -1,10 +1,19 @@
 import Card from "@/component/card/card";
+import AddCardModal from "@/component/modal/add-card-modal/add-card-modal";
+import Modal from "@/component/modal/modal";
 import { useKanStore } from "@/store/store";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 
 const CompletedList = () => {
   const { projectBoard } = useKanStore();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const completedCount = (projectBoard?.columns?.completed || []).length;
+
+  const openCreateCardHandler = () => {
+    console.log("openCreateCardHandler");
+    setIsModalOpen(true);
+  };
   return (
     <div className="col-span-1 bg-red-300 p-2">
       <div
@@ -29,9 +38,11 @@ const CompletedList = () => {
         {completedCount === 0 && (
           <button
             className="
-          w-7 h-5 rounded-full bg-gray-200
-          flex items-center justify-center
-          "
+        w-7 h-5 rounded-full
+        flex items-center justify-center
+        bg-gray-200
+        "
+            onClick={openCreateCardHandler}
           >
             <Plus size={16} />
           </button>
@@ -39,8 +50,11 @@ const CompletedList = () => {
       </div>
       {completedCount !== 0 &&
         projectBoard.columns.completed.map((column) => (
-          <Card column={column}></Card>
+          <Card key={column.id} column={column}></Card>
         ))}
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <AddCardModal onClose={() => {}} targetState="completed" />
+      </Modal>
     </div>
   );
 };

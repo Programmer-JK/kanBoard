@@ -1,10 +1,10 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { ColumnTypes, ProjectBoardTypes } from "@/type/common";
+import { ColumnTypes, ProjectBoardTypes, StateType } from "@/type/common";
 
 interface ProjectStore {
   projectBoard: ProjectBoardTypes;
-  setProjectName: (name: string) => void;
+  setStoreProjectName: (targetName: string) => void;
   addColumn: (
     status: keyof ProjectBoardTypes["columns"],
     column: ColumnTypes
@@ -16,6 +16,11 @@ interface ProjectStore {
   ) => void;
   removeColumn: (
     status: keyof ProjectBoardTypes["columns"],
+    columnId: string
+  ) => void;
+  moveColumn: (
+    fromState: StateType,
+    toState: StateType,
     columnId: string
   ) => void;
 }
@@ -33,19 +38,16 @@ export const useKanStore = create(
         },
       },
 
-      setProjectName: (name) => {
+      setStoreProjectName: (targetName) => {
         set((state) => ({
           projectBoard: {
             ...state.projectBoard,
-            projectName: name,
+            name: targetName,
           },
         }));
       },
 
-      addColumn: (
-        status: "pending" | "planned" | "ongoing" | "completed",
-        column: ColumnTypes
-      ) => {
+      addColumn: (status: StateType, column: ColumnTypes) => {
         set((state) => ({
           projectBoard: {
             ...state.projectBoard,
@@ -57,11 +59,7 @@ export const useKanStore = create(
         }));
       },
 
-      updateColumn: (
-        status: "pending" | "planned" | "ongoing" | "completed",
-        columnId,
-        updateColumn
-      ) => {
+      updateColumn: (status: StateType, columnId, updateColumn) => {
         set((state) => ({
           projectBoard: {
             ...state.projectBoard,
@@ -75,10 +73,7 @@ export const useKanStore = create(
         }));
       },
 
-      removeColumn: (
-        status: "pending" | "planned" | "ongoing" | "completed",
-        columnId
-      ) => {
+      removeColumn: (status: StateType, columnId) => {
         set((state) => ({
           projectBoard: {
             ...state.projectBoard,
@@ -93,12 +88,12 @@ export const useKanStore = create(
       },
 
       moveColumn: (
-        fromStatus: "pending" | "planned" | "ongoing" | "completed",
-        toStatus: "pending" | "planned" | "ongoing" | "completed",
+        fromState: StateType,
+        toState: StateType,
         columnId: string
       ) => {
         set((state) => {
-          const columnToMove = state.projectBoard.columns[fromStatus].find(
+          const columnToMove = state.projectBoard.columns[fromState].find(
             (column) => column.id === columnId
           );
 
@@ -109,12 +104,12 @@ export const useKanStore = create(
               name: state.projectBoard.name,
               columns: {
                 ...state.projectBoard.columns,
-                [fromStatus]: state.projectBoard.columns[fromStatus].filter(
+                [fromState]: state.projectBoard.columns[fromState].filter(
                   (column) => column.id !== columnId
                 ),
-                [toStatus]: [
-                  ...state.projectBoard.columns[toStatus],
-                  { ...columnToMove, state: toStatus },
+                [toState]: [
+                  ...state.projectBoard.columns[toState],
+                  { ...columnToMove, state: toState },
                 ],
               },
             },

@@ -7,12 +7,19 @@ import PlannedList from "./planned-list/planned-list";
 import PendingList from "./pending-list/pending-list";
 
 const Board = () => {
-  const { projectBoard, setProjectName } = useKanStore();
+  const { projectBoard, setStoreProjectName } = useKanStore();
+  const [projectName, setProjectName] = useState(projectBoard.name);
   const [availableChange, setAvailableChange] = useState(false);
   const inputRef = useRef(null);
 
-  const changeProjectTitleHandler = (e) => {
+  const changeProjectNameHandler = (e) => {
+    console.log(e.target.value);
     setProjectName(e.target.value);
+  };
+
+  const saveProjectNameHandler = () => {
+    setStoreProjectName(projectName);
+    setAvailableChange(false);
   };
 
   useEffect(() => {
@@ -30,10 +37,10 @@ const Board = () => {
         <input
           className="bg-[#f8f8f8] outline-none"
           ref={inputRef}
-          value={projectBoard.name}
-          onChange={changeProjectTitleHandler}
+          value={projectName}
+          onChange={changeProjectNameHandler}
           disabled={!availableChange}
-          onBlur={() => setAvailableChange(false)}
+          onBlur={saveProjectNameHandler}
         ></input>
         <button onClick={() => setAvailableChange(true)}>
           <PencilLine />

@@ -41,7 +41,7 @@ const PlannedList = () => {
             {plannedCount}
           </span>
         </div>
-        {checkPendingListEmpty() && (
+        {!checkPendingListEmpty() && (
           <button
             className="flex bg-gray-200 rounded-full w-7 h-5 items-center justify-center"
             onClick={openCreateCardHandler}
@@ -51,14 +51,14 @@ const PlannedList = () => {
         )}
       </div>
       {!checkPendingListEmpty() ? (
-        projectBoard.columns.pending.map((column) => (
-          <Card column={column}></Card>
+        projectBoard.columns.planned.map((column) => (
+          <Card key={column.id} column={column}></Card>
         ))
       ) : (
         <AddCard onClick={openCreateCardHandler} />
       )}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <AddCardModal onClose={() => {}} />
+        <AddCardModal onClose={() => {}} targetState="planned" />
       </Modal>
     </div>
   );

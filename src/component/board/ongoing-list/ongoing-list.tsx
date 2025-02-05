@@ -1,10 +1,20 @@
 import Card from "@/component/card/card";
+import AddCardModal from "@/component/modal/add-card-modal/add-card-modal";
+import Modal from "@/component/modal/modal";
 import { useKanStore } from "@/store/store";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 
 const OngoingList = () => {
   const { projectBoard } = useKanStore();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const onGoingCount = (projectBoard?.columns?.ongoing || []).length;
+
+  const openCreateCardHandler = () => {
+    console.log("openCreateCardHandler");
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="col-span-1 bg-blue-300 p-2">
       <div
@@ -33,6 +43,7 @@ const OngoingList = () => {
           flex items-center justify-center
           bg-gray-200
           "
+            onClick={openCreateCardHandler}
           >
             <Plus size={16} />
           </button>
@@ -40,8 +51,11 @@ const OngoingList = () => {
       </div>
       {onGoingCount !== 0 &&
         projectBoard.columns.ongoing.map((column) => (
-          <Card column={column}></Card>
+          <Card key={column.id} column={column}></Card>
         ))}
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <AddCardModal onClose={() => {}} targetState="ongoing" />
+      </Modal>
     </div>
   );
 };

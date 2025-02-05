@@ -41,6 +41,7 @@ export interface ModalProps {
 export interface ChildrenModalProps {
   onClose: () => void;
   columnData?: ColumnTypes;
+  targetState?: StateType;
 }
 
 export interface CardProps {

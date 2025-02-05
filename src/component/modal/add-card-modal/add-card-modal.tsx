@@ -3,9 +3,18 @@ import { ChildrenModalProps, ColumnTypes } from "@/type/common";
 import { getTagColorClass } from "@/util/common";
 import { useState } from "react";
 
-const AddCardModal = ({ onClose }: ChildrenModalProps) => {
-  const [selectedColumn, setSelectedColumn] = useState({} as ColumnTypes);
-  const { projectBoard } = useKanStore();
+const AddCardModal = ({ onClose, targetState }: ChildrenModalProps) => {
+  const [selectedColumn, setSelectedColumn] = useState<ColumnTypes | null>(
+    null
+  );
+  const { projectBoard, moveColumn } = useKanStore();
+
+  const handleCreateCard = () => {
+    console.log(targetState, selectedColumn);
+    if (!selectedColumn) return;
+    moveColumn("pending", targetState, selectedColumn.id);
+  };
+
   return (
     <div className="flex flex-col gap-2 w-full max-w-lg">
       <h2 className="text-lg font-bold mb-4">카드 추가</h2>
@@ -18,9 +27,9 @@ const AddCardModal = ({ onClose }: ChildrenModalProps) => {
       overflow-y-scroll
       "
       >
-        {(projectBoard?.columns?.pending || []).map((column, idx) => (
+        {(projectBoard?.columns?.pending || []).map((column: ColumnTypes) => (
           <div
-            key={idx}
+            key={column.id}
             className="
             flex flex-col 
             hover:bg-gray-200 
@@ -48,26 +57,30 @@ const AddCardModal = ({ onClose }: ChildrenModalProps) => {
       <div className="font-bold">선택한 column : </div>
       <div
         className="
-      flex flex-col
-       bg-white w-full h-fit 
-       content-center 
-       rounded-md px-2 py-1
-       "
+          flex flex-col
+          bg-white w-full h-fit 
+          content-center 
+          rounded-md px-2 py-1
+          "
       >
-        <div className="flex flex-row">
-          {selectedColumn.tags &&
-            selectedColumn.tags.map((tag, idx) => (
-              <span
-                key={idx}
-                className={`w-fit my-0.5 mx-1 rounded px-1 font-bold ${getTagColorClass(
-                  tag.color
-                )}`}
-              >
-                {tag.text}
-              </span>
-            ))}
-        </div>
-        {selectedColumn.content}
+        {selectedColumn && (
+          <div>
+            <div className="flex flex-row">
+              {selectedColumn.tags &&
+                selectedColumn.tags.map((tag, idx) => (
+                  <span
+                    key={idx}
+                    className={`w-fit my-0.5 mx-1 rounded px-1 font-bold ${getTagColorClass(
+                      tag.color
+                    )}`}
+                  >
+                    {tag.text}
+                  </span>
+                ))}
+            </div>
+            {selectedColumn.content}
+          </div>
+        )}
       </div>
 
       {/* 버튼 영역 */}
@@ -84,7 +97,9 @@ const AddCardModal = ({ onClose }: ChildrenModalProps) => {
         <button
           className="
         bg-blue-400 hover:bg-blue-500
-        text-white px-4 py-2 rounded"
+        text-white px-4 py-2 rounded
+        "
+          onClick={handleCreateCard}
         >
           추가
         </button>
