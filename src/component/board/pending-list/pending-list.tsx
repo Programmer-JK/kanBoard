@@ -31,11 +31,7 @@ const PendingList = () => {
         <Plus size={14} /> Add another list
       </button>
       {(projectBoard?.columns?.pending || []).map((column) => (
-        <PendingCard
-          key={column.id}
-          tag={column.tags}
-          contents={column.content}
-        ></PendingCard>
+        <PendingCard key={column.id} column={column}></PendingCard>
       ))}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <AddColumnModal onClose={() => {}} />

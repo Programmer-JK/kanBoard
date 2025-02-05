@@ -1,6 +1,6 @@
 import ColorPicker from "@/component/color-picker/color-picker";
 import { useKanStore } from "@/store/store";
-import { ChildrenModalProps, TagTypes } from "@/type/common";
+import { ChildrenModalProps, ColumnTypes, TagTypes } from "@/type/common";
 import { generateSimpleId } from "@/util/common";
 import { useState } from "react";
 
@@ -27,13 +27,14 @@ const AddColumnModal = ({ onClose }: ChildrenModalProps) => {
   };
 
   const handleAddColumn = () => {
-    const newColumn = {
+    const newColumn: ColumnTypes = {
       id: generateSimpleId(),
       state: "pending",
       tags: tags,
       content: content,
     };
     addColumn("pending", newColumn);
+    onClose();
   };
 
   return (

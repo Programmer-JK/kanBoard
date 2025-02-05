@@ -52,11 +52,7 @@ const PlannedList = () => {
       </div>
       {!checkPendingListEmpty() ? (
         projectBoard.columns.pending.map((column) => (
-          <Card
-            key={column.id}
-            tag={column.tags}
-            contents={column.content}
-          ></Card>
+          <Card column={column}></Card>
         ))
       ) : (
         <AddCard onClick={openCreateCardHandler} />

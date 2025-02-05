@@ -1,11 +1,14 @@
 import ColorPicker from "@/component/color-picker/color-picker";
+import { useKanStore } from "@/store/store";
 import { ChildrenModalProps, TagTypes } from "@/type/common";
 import { useState } from "react";
 
-const CardInfoModal = ({ onClose }: ChildrenModalProps) => {
+const CardInfoModal = ({ columnData, onClose }: ChildrenModalProps) => {
+  const { updateColumn } = useKanStore();
   const [color, setColor] = useState("");
   const [tagName, setTagName] = useState("");
-  const [tags, setTags] = useState([] as TagTypes[]);
+  const [tags, setTags] = useState(columnData?.tags || ([] as TagTypes[]));
+  const [content, setContent] = useState(columnData?.content || "");
 
   const handleColorSelect = (selectedColor: string) => {
     setColor(selectedColor);
@@ -20,6 +23,18 @@ const CardInfoModal = ({ onClose }: ChildrenModalProps) => {
 
   const handleRemoveTag = (index: number) => {
     setTags(tags.filter((_, idx) => idx !== index));
+  };
+
+  const handleModifyColumn = () => {
+    if (!columnData) return;
+    const newColumn = {
+      id: columnData.id,
+      state: columnData.state,
+      tags: tags,
+      content: content,
+    };
+    updateColumn(columnData.state, columnData.id, newColumn);
+    onClose();
   };
 
   return (
@@ -75,7 +90,11 @@ const CardInfoModal = ({ onClose }: ChildrenModalProps) => {
       </div>
       <div>
         <div className="font-bold mb-2">column 내용 : </div>
-        <input className="w-full rounded-md p-2 outline-none"></input>
+        <input
+          className="w-full rounded-md p-2 outline-none"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
       </div>
 
       {/* 하단 버튼들 */}
@@ -91,6 +110,7 @@ const CardInfoModal = ({ onClose }: ChildrenModalProps) => {
         bg-orange-400 hover:bg-orange-500 
         text-white px-4 py-2 rounded
         "
+          onClick={handleModifyColumn}
         >
           수정
         </button>

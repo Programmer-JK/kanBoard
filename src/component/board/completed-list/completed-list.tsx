@@ -39,11 +39,7 @@ const CompletedList = () => {
       </div>
       {completedCount !== 0 &&
         projectBoard.columns.completed.map((column) => (
-          <Card
-            key={column.id}
-            tag={column.tags}
-            contents={column.content}
-          ></Card>
+          <Card column={column}></Card>
         ))}
     </div>
   );

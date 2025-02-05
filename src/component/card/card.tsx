@@ -1,30 +1,45 @@
-import { CardProps } from "@/type/common";
+import { CardProps, TagTypes } from "@/type/common";
 import { getTagColorClass } from "@/util/common";
+import Modal from "../modal/modal";
+import AddColumnModal from "../modal/add-column-modal/add-column-modal";
+// import { useKanStore } from "@/store/store";
+import { useState } from "react";
 
-const Card = ({ tag, contents }: CardProps) => {
+const Card = ({ column }: CardProps) => {
+  // const { projectBoard } = useKanStore();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openCreateColumnHandler = () => {
+    setIsModalOpen(true);
+  };
   return (
-    <div
-      className="
+    <div>
+      <div
+        className="
     w-full my-3 p-2 
     bg-white rounded-md shadow-md shadow-black/40
     "
-    >
-      <div className="flex flex-wrap whitespace-nowrap">
-        {tag &&
-          tag.map((item, idx) => (
-            <span
-              key={idx}
-              className={`
+        onClick={openCreateColumnHandler}
+      >
+        <div className="flex flex-wrap whitespace-nowrap">
+          {column.tags &&
+            column.tags.map((item: TagTypes) => (
+              <span
+                key={item.text}
+                className={`
                 w-fit my-0.5 mx-1 rounded px-1 
                 font-bold 
                 ${getTagColorClass(item.color)}
                 `}
-            >
-              {item.text}
-            </span>
-          ))}
+              >
+                {item.text}
+              </span>
+            ))}
+        </div>
+        <div className="mt-3">{column.content}</div>
       </div>
-      <div className="mt-3">{contents}</div>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <AddColumnModal onClose={() => {}} />
+      </Modal>
     </div>
   );
 };
