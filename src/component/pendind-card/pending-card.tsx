@@ -22,7 +22,7 @@ const PendingCard = ({ column }: CardProps) => {
       <div
         className="
           flex flex-col items-end gap-2
-          w-full my-1 p-2 
+          w-full mb-2 p-2 
           bg-white rounded-md 
           shadow-md shadow-black/40
         "

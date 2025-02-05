@@ -18,18 +18,20 @@ const PendingList = () => {
       bg-purple-300 p-2 mr-16
       "
     >
-      <button
-        className="
-          w-fit my-1 p-2 
+      <div className="w-full p-2 ">
+        <button
+          className="
+          w-fit my-1 p-2
           flex flex-row justify-center items-center gap-2
         bg-gray-100 text-gray-500 rounded-lg 
           font-medium text-sm 
         hover:bg-gray-200 hover:outline-gray-400
         "
-        onClick={openCreateColumnHandler}
-      >
-        <Plus size={14} /> Add another list
-      </button>
+          onClick={openCreateColumnHandler}
+        >
+          <Plus size={14} /> Add another list
+        </button>
+      </div>
 
       {(projectBoard?.columns?.pending || []).map((column) => (
         <PendingCard key={column.id} column={column}></PendingCard>
