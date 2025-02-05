@@ -11,6 +11,12 @@ const Card = ({ column }: CardProps) => {
   const openCreateColumnHandler = () => {
     setIsModalOpen(true);
   };
+
+  const handleDragStart = (e: React.DragEvent) => {
+    e.dataTransfer.setData("columnId", column.id);
+    e.dataTransfer.setData("fromState", column.state);
+  };
+
   return (
     <div>
       <div
@@ -19,6 +25,8 @@ const Card = ({ column }: CardProps) => {
     bg-white rounded-md shadow-md shadow-black/40
     "
         onClick={openCreateColumnHandler}
+        draggable
+        onDragStart={handleDragStart}
       >
         <div className="flex flex-wrap whitespace-nowrap">
           {column.tags &&
