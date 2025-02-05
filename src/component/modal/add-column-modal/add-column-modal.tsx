@@ -27,14 +27,16 @@ const AddColumnModal = ({ onClose }: ChildrenModalProps) => {
   };
 
   const handleAddColumn = () => {
-    const newColumn: ColumnTypes = {
-      id: generateSimpleId(),
-      state: "pending",
-      tags: tags,
-      content: content,
-    };
-    addColumn("pending", newColumn);
-    onClose();
+    if (content !== "") {
+      const newColumn: ColumnTypes = {
+        id: generateSimpleId(),
+        state: "pending",
+        tags: tags,
+        content: content,
+      };
+      addColumn("pending", newColumn);
+      onClose();
+    }
   };
 
   return (

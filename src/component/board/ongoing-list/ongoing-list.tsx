@@ -11,7 +11,6 @@ const OngoingList = () => {
   const onGoingCount = (projectBoard?.columns?.ongoing || []).length;
 
   const openCreateCardHandler = () => {
-    console.log("openCreateCardHandler");
     setIsModalOpen(true);
   };
 

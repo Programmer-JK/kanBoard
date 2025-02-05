@@ -10,9 +10,9 @@ const AddCardModal = ({ onClose, targetState }: ChildrenModalProps) => {
   const { projectBoard, moveColumn } = useKanStore();
 
   const handleCreateCard = () => {
-    console.log(targetState, selectedColumn);
-    if (!selectedColumn) return;
+    if (!selectedColumn || !targetState) return;
     moveColumn("pending", targetState, selectedColumn.id);
+    onClose();
   };
 
   return (
