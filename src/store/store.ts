@@ -6,14 +6,14 @@ interface ProjectStore {
   projectBoard: ProjectBoardTypes;
   setStoreProjectName: (targetName: string) => void;
   addColumn: (column: ColumnTypes) => void;
-  addCard: (columnState: StateType, column: ColumnTypes) => void;
-  removeCard: (targetColumn: ColumnTypes) => void;
+  removeColumn: (columnState: StateType, columnId: string) => void;
   updateColumn: (
     columnState: StateType,
     columnId: string,
     updateColumn: Partial<ColumnTypes>
   ) => void;
-  removeColumn: (columnState: StateType, columnId: string) => void;
+  addCard: (columnState: StateType, column: ColumnTypes) => void;
+  removeCard: (targetColumn: ColumnTypes) => void;
   moveCard: (
     fromState: StateType,
     toState: StateType,
@@ -51,6 +51,41 @@ export const useKanStore = create(
             columns: {
               ...state.projectBoard.columns,
               ["pending"]: [...state.projectBoard.columns["pending"], column],
+            },
+          },
+        }));
+      },
+
+      removeColumn: (columnState: StateType, columnId) => {
+        set((state) => {
+          if (columnState !== "pending") return state;
+          return {
+            projectBoard: {
+              ...state.projectBoard,
+              columns: {
+                ...state.projectBoard.columns,
+                ["pending"]: state.projectBoard.columns["pending"].filter(
+                  (column) => column.id !== columnId
+                ),
+              },
+            },
+          };
+        });
+      },
+
+      updateColumn: (columnState: StateType, columnId, updateColumn) => {
+        console.log("a", columnState, columnId, updateColumn);
+        set((state) => ({
+          projectBoard: {
+            ...state.projectBoard,
+            columns: {
+              ...state.projectBoard.columns,
+              [columnState]: state.projectBoard.columns[columnState].map(
+                (column) =>
+                  column.id === columnId
+                    ? { ...column, ...updateColumn }
+                    : column
+              ),
             },
           },
         }));
@@ -97,41 +132,6 @@ export const useKanStore = create(
                 ["pending"]: newPendingColumns,
                 [targetState]: state.projectBoard.columns[targetState].filter(
                   (column) => column.id !== targetColumn.id
-                ),
-              },
-            },
-          };
-        });
-      },
-
-      updateColumn: (columnState: StateType, columnId, updateColumn) => {
-        console.log("a", columnState, columnId, updateColumn);
-        set((state) => ({
-          projectBoard: {
-            ...state.projectBoard,
-            columns: {
-              ...state.projectBoard.columns,
-              [columnState]: state.projectBoard.columns[columnState].map(
-                (column) =>
-                  column.id === columnId
-                    ? { ...column, ...updateColumn }
-                    : column
-              ),
-            },
-          },
-        }));
-      },
-
-      removeColumn: (columnState: StateType, columnId) => {
-        set((state) => {
-          if (columnState !== "pending") return state;
-          return {
-            projectBoard: {
-              ...state.projectBoard,
-              columns: {
-                ...state.projectBoard.columns,
-                ["pending"]: state.projectBoard.columns["pending"].filter(
-                  (column) => column.id !== columnId
                 ),
               },
             },

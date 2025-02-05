@@ -11,6 +11,7 @@ export const getTagColorClass = (color: string) => {
   };
   return colorMap[color] || "bg-gray-300/30 text-gray-700";
 };
+
 export const getStateColorClass = (color: string) => {
   const colorMap: { [key: string]: string } = {
     pending: "bg-purple-200 text-purple-900 border-purple-800",

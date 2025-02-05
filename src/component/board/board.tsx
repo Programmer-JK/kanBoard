@@ -1,9 +1,9 @@
 import { PencilLine } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useKanStore } from "@/store/store";
+import PlannedList from "./planned-list/planned-list";
 import OngoingList from "./ongoing-list/ongoing-list";
 import CompletedList from "./completed-list/completed-list";
-import PlannedList from "./planned-list/planned-list";
 import PendingList from "./pending-list/pending-list";
 
 const Board = () => {
@@ -46,6 +46,7 @@ const Board = () => {
           <PencilLine />
         </button>
       </div>
+
       <div className="grid grid-cols-5 h-screen pt-8">
         <PlannedList />
         <OngoingList />

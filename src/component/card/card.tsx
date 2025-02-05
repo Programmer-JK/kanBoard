@@ -1,9 +1,9 @@
+import { useState } from "react";
+import { X } from "lucide-react";
+import Modal from "@/component/modal/modal";
+import CardInfoModal from "@/component/card_info-modal/card_info-modal";
 import { CardProps, TagTypes } from "@/type/common";
 import { getTagColorClass } from "@/util/common";
-import Modal from "../modal/modal";
-import { useState } from "react";
-import CardInfoModal from "../card_info-modal/card_info-modal";
-import { X } from "lucide-react";
 import { useKanStore } from "@/store/store";
 
 const Card = ({ column }: CardProps) => {
@@ -26,11 +26,11 @@ const Card = ({ column }: CardProps) => {
     <div>
       <div
         className="
-        card 
-        flex flex-col items-end
-    w-full my-3 p-2 
-    bg-white rounded-md shadow-md shadow-black/40
-    "
+          card 
+          flex flex-col items-end
+          w-full my-3 p-2 
+        bg-white rounded-md shadow-md shadow-black/40
+        "
         onClick={openCreateColumnHandler}
         draggable
         onDragStart={handleDragStart}
@@ -43,10 +43,10 @@ const Card = ({ column }: CardProps) => {
                 <span
                   key={item.text}
                   className={`
-                w-fit my-0.5 mx-1 rounded px-1 
-                font-bold 
-                ${getTagColorClass(item.color)}
-                `}
+                    w-fit my-0.5 mx-1 rounded px-1 
+                    font-bold 
+                    ${getTagColorClass(item.color)}
+                  `}
                 >
                   {item.text}
                 </span>
@@ -55,6 +55,7 @@ const Card = ({ column }: CardProps) => {
           <div className="mt-3">{column.content}</div>
         </div>
       </div>
+
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <CardInfoModal columnData={column} onClose={() => {}} />
       </Modal>

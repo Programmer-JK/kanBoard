@@ -1,13 +1,13 @@
-import ColorPicker from "@/component/color-picker/color-picker";
-import { useKanStore } from "@/store/store";
-import { ChildrenModalProps, TagTypes } from "@/type/common";
 import { useState } from "react";
+import ColorPicker from "@/component/color-picker/color-picker";
+import { ChildrenModalProps, TagTypes } from "@/type/common";
+import { useKanStore } from "@/store/store";
 
 const CardInfoModal = ({ columnData, onClose }: ChildrenModalProps) => {
   const { updateColumn } = useKanStore();
   const [color, setColor] = useState("");
-  const [tagName, setTagName] = useState("");
   const [tags, setTags] = useState(columnData?.tags || ([] as TagTypes[]));
+  const [tagName, setTagName] = useState("");
   const [content, setContent] = useState(columnData?.content || "");
 
   const handleColorSelect = (selectedColor: string) => {
@@ -75,7 +75,7 @@ const CardInfoModal = ({ columnData, onClose }: ChildrenModalProps) => {
                 font-bold 
                 bg-${tag.color}-300/30 
                 text-${tag.color}-700
-                `}
+              `}
             >
               {tag.text}
               <button
@@ -107,9 +107,9 @@ const CardInfoModal = ({ columnData, onClose }: ChildrenModalProps) => {
         </button>
         <button
           className="
-        bg-orange-400 hover:bg-orange-500 
-        text-white px-4 py-2 rounded
-        "
+          bg-orange-400 hover:bg-orange-500 
+          text-white px-4 py-2 rounded
+          "
           onClick={handleModifyColumn}
         >
           수정
