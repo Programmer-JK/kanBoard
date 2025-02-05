@@ -12,6 +12,16 @@ export const getTagColorClass = (color: string) => {
   return colorMap[color] || "bg-gray-300/30 text-gray-700";
 };
 
+export const getStateColorClass = (color: string) => {
+  const colorMap: { [key: string]: string } = {
+    pending: "bg-purple-200 text-purple-900 border-purple-800",
+    planned: "bg-green-200 text-green-900 border-green-800",
+    ongoing: "bg-blue-200 text-blue-900 border-blue-800",
+    completed: "bg-red-200 text-red-900 border-red-800",
+  };
+  return colorMap[color] || "bg-gray-300/30 text-gray-700";
+};
+
 export const generateSimpleId = () => {
   return Date.now().toString();
 };

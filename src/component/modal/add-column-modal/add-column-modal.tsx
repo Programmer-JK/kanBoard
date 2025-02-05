@@ -1,8 +1,8 @@
+import { useState } from "react";
 import ColorPicker from "@/component/color-picker/color-picker";
 import { useKanStore } from "@/store/store";
-import { ChildrenModalProps, TagTypes } from "@/type/common";
 import { generateSimpleId } from "@/util/common";
-import { useState } from "react";
+import { ChildrenModalProps, ColumnTypes, TagTypes } from "@/type/common";
 
 const AddColumnModal = ({ onClose }: ChildrenModalProps) => {
   const { addColumn } = useKanStore();
@@ -11,29 +11,32 @@ const AddColumnModal = ({ onClose }: ChildrenModalProps) => {
   const [content, setContent] = useState("");
   const [tags, setTags] = useState([] as TagTypes[]);
 
-  const handleColorSelect = (selectedColor: string) => {
+  const colorSelectHandler = (selectedColor: string) => {
     setColor(selectedColor);
   };
 
-  const handleAddTag = () => {
+  const addTagHandler = () => {
     if (tagName && color) {
       setTags([...tags, { text: tagName, color: color }]);
       setTagName("");
     }
   };
 
-  const handleRemoveTag = (index: number) => {
+  const removeTagHandler = (index: number) => {
     setTags(tags.filter((_, idx) => idx !== index));
   };
 
-  const handleAddColumn = () => {
-    const newColumn = {
-      id: generateSimpleId(),
-      state: "pending",
-      tags: tags,
-      content: content,
-    };
-    addColumn("pending", newColumn);
+  const addColumnHandler = () => {
+    if (content !== "") {
+      const newColumn: ColumnTypes = {
+        id: generateSimpleId(),
+        state: "pending",
+        tags: tags,
+        content: content,
+      };
+      addColumn(newColumn);
+      onClose();
+    }
   };
 
   return (
@@ -49,17 +52,20 @@ const AddColumnModal = ({ onClose }: ChildrenModalProps) => {
           onChange={(e) => setTagName(e.target.value)}
           className="w-full rounded-md p-2 outline-none"
         />
+
         <div className="font-bold text-gray-600">태그 색깔</div>
-        <ColorPicker onColorSelect={handleColorSelect} />
+        <ColorPicker onColorSelect={colorSelectHandler} />
+
         <div className="flex justify-end">
           <button
-            onClick={handleAddTag}
+            onClick={addTagHandler}
             className="bg-blue-400 hover:bg-blue-500 text-white px-4 py-1 rounded"
           >
             추가
           </button>
         </div>
       </div>
+
       <div>
         <div className="font-bold mb-2">태그 : </div>
         <div className="w-full rounded-md p-2 bg-white">
@@ -71,11 +77,11 @@ const AddColumnModal = ({ onClose }: ChildrenModalProps) => {
                 font-bold 
                 bg-${tag.color}-300/30 
                 text-${tag.color}-700
-                `}
+              `}
             >
               {tag.text}
               <button
-                onClick={() => handleRemoveTag(idx)}
+                onClick={() => removeTagHandler(idx)}
                 className="ml-1 hover:text-red-500"
               >
                 ×
@@ -84,6 +90,7 @@ const AddColumnModal = ({ onClose }: ChildrenModalProps) => {
           ))}
         </div>
       </div>
+
       <div>
         <div className="font-bold mb-2">column 내용 : </div>
         <input
@@ -99,7 +106,7 @@ const AddColumnModal = ({ onClose }: ChildrenModalProps) => {
           className="
           bg-red-400 hover:bg-red-500 
           text-white 
-          px-4 py-2 rounded
+            px-4 py-2 rounded
           "
           onClick={onClose}
         >
@@ -109,9 +116,9 @@ const AddColumnModal = ({ onClose }: ChildrenModalProps) => {
           className="
           bg-blue-400 hover:bg-blue-500 
           text-white 
-          px-4 py-2 rounded
+            px-4 py-2 rounded
           "
-          onClick={handleAddColumn}
+          onClick={addColumnHandler}
         >
           추가
         </button>

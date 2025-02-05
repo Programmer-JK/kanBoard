@@ -1,5 +1,7 @@
 import { MouseEventHandler, ReactElement } from "react";
 
+export type StateType = "pending" | "planned" | "ongoing" | "completed";
+
 export interface TagTypes {
   color: string;
   text: string;
@@ -7,7 +9,7 @@ export interface TagTypes {
 
 export interface ColumnTypes {
   id: string;
-  state: string;
+  state: StateType;
   tags: TagTypes[];
   content: string;
 }
@@ -38,10 +40,10 @@ export interface ModalProps {
 
 export interface ChildrenModalProps {
   onClose: () => void;
+  columnData?: ColumnTypes;
+  targetState?: StateType;
 }
 
 export interface CardProps {
-  key: string;
-  tag: Array<TagTypes>;
-  contents: string;
+  column: ColumnTypes;
 }
