@@ -3,12 +3,13 @@ import { X } from "lucide-react";
 import Modal from "@/component/modal/modal";
 import CardInfoModal from "@/component/card_info-modal/card_info-modal";
 import { CardProps, TagTypes } from "@/type/common";
-import { getTagColorClass } from "@/util/common";
+import { getTagColorClass, isMobile } from "@/util/common";
 import { useKanStore } from "@/store/store";
 
 const Card = ({ column }: CardProps) => {
   const { removeCard } = useKanStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const openCreateColumnHandler = () => {
     setIsModalOpen(true);
   };
@@ -16,6 +17,30 @@ const Card = ({ column }: CardProps) => {
   const handleDragStart = (e: React.DragEvent) => {
     e.dataTransfer.setData("columnId", column.id);
     e.dataTransfer.setData("fromState", column.state);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!isMobile) return;
+    setTouchPos({
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    });
+    e.currentTarget.style.zIndex = "1000";
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isMobile) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    e.currentTarget.style.transform = `translate(${
+      touch.clientX - touchPos.x
+    }px, ${touch.clientY - touchPos.y}px)`;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!isMobile) return;
+    e.currentTarget.style.transform = "";
+    e.currentTarget.style.zIndex = "";
   };
 
   const handleDeleteCard = () => {
@@ -32,7 +57,7 @@ const Card = ({ column }: CardProps) => {
         bg-white rounded-md shadow-md shadow-black/40
         "
         onClick={openCreateColumnHandler}
-        draggable
+        draggable={!isMobile}
         onDragStart={handleDragStart}
       >
         <X size={16} onClick={handleDeleteCard} className="mb-0.5" />

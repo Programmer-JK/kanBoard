@@ -22,6 +22,8 @@ export const getStateColorClass = (color: string) => {
   return colorMap[color] || "bg-gray-300/30 text-gray-700";
 };
 
+export const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
 export const generateSimpleId = () => {
   return Date.now().toString();
 };

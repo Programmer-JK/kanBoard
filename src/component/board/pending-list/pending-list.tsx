@@ -15,7 +15,7 @@ const PendingList = () => {
     <div
       className="
         flex flex-col col-span-2 
-      bg-purple-300 p-2 mr-16
+      bg-purple-300 p-2 md:mr-16
       "
     >
       <div className="w-full p-2 ">

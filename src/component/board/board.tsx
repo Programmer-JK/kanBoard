@@ -32,7 +32,7 @@ const Board = () => {
   }, [availableChange]);
 
   return (
-    <div className="h-full pt-36">
+    <div className="h-full pt-24 md:pt-36">
       <div className="flex flex-row text-2xl font-bold gap-5 items-center">
         <input
           className="bg-[#f8f8f8] outline-none"
@@ -47,7 +47,7 @@ const Board = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-5 h-screen pt-8">
+      <div className="flex flex-col md:grid md:grid-cols-5 h-screen pt-8">
         <PlannedList />
         <OngoingList />
         <CompletedList />

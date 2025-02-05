@@ -7,7 +7,7 @@ function App() {
       <Header />
       <div className="flex-1 w-full grid md:grid-cols-6">
         <div className="md:col-span-1"></div>
-        <div className="md:col-span-5">
+        <div className="px-5 md:col-span-5">
           <Board />
         </div>
       </div>
