@@ -9,7 +9,7 @@ import { useState } from "react";
 const OngoingList = () => {
   const state: StateType = "ongoing";
 
-  const { projectBoard, moveColumn } = useKanStore();
+  const { projectBoard, moveCard } = useKanStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const onGoingCount = (projectBoard?.columns?.ongoing || []).length;
 
@@ -26,8 +26,24 @@ const OngoingList = () => {
     const columnId = e.dataTransfer.getData("columnId");
     const fromState = e.dataTransfer.getData("fromState") as StateType;
 
-    if (fromState === state) return;
-    moveColumn(fromState, state, columnId);
+    const container = e.currentTarget as HTMLElement;
+    const cards = container.querySelectorAll(".card");
+    const dropY = e.clientY;
+
+    let dropIndex = projectBoard.columns[state].length;
+
+    for (let i = 0; i < cards.length; i++) {
+      const card = cards[i];
+      const rect = card.getBoundingClientRect();
+      const cardMiddle = rect.top + rect.height / 2;
+
+      if (dropY < cardMiddle) {
+        dropIndex = i;
+        break;
+      }
+    }
+
+    moveCard(fromState, state, columnId, dropIndex);
   };
 
   return (

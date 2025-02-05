@@ -7,11 +7,11 @@ const AddCardModal = ({ onClose, targetState }: ChildrenModalProps) => {
   const [selectedColumn, setSelectedColumn] = useState<ColumnTypes | null>(
     null
   );
-  const { projectBoard, moveColumn } = useKanStore();
+  const { projectBoard, addCard } = useKanStore();
 
   const handleCreateCard = () => {
     if (!selectedColumn || !targetState) return;
-    moveColumn("pending", targetState, selectedColumn.id);
+    addCard(targetState, selectedColumn);
     onClose();
   };
 
@@ -27,32 +27,34 @@ const AddCardModal = ({ onClose, targetState }: ChildrenModalProps) => {
       overflow-y-scroll
       "
       >
-        {(projectBoard?.columns?.pending || []).map((column: ColumnTypes) => (
-          <div
-            key={column.id}
-            className="
+        {(projectBoard?.columns?.pending || []).map((column: ColumnTypes) => {
+          return column.state === "pending" ? (
+            <div
+              key={column.id}
+              className="
             flex flex-col 
             hover:bg-gray-200 
             p-1 rounded-md border
             border-gray-200"
-            onClick={() => setSelectedColumn(column)}
-          >
-            <div className="flex flex-row">
-              {column.tags &&
-                column.tags.map((item, idx) => (
-                  <span
-                    key={idx}
-                    className={`w-fit my-0.5 mx-1 rounded px-1 font-bold ${getTagColorClass(
-                      item.color
-                    )}`}
-                  >
-                    {item.text}
-                  </span>
-                ))}
+              onClick={() => setSelectedColumn(column)}
+            >
+              <div className="flex flex-row">
+                {column.tags &&
+                  column.tags.map((item, idx) => (
+                    <span
+                      key={idx}
+                      className={`w-fit my-0.5 mx-1 rounded px-1 font-bold ${getTagColorClass(
+                        item.color
+                      )}`}
+                    >
+                      {item.text}
+                    </span>
+                  ))}
+              </div>
+              {column.content}
             </div>
-            {column.content}
-          </div>
-        ))}
+          ) : null;
+        })}
       </div>
       <div className="font-bold">선택한 column : </div>
       <div

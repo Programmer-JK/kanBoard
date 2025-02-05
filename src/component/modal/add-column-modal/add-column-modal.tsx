@@ -34,7 +34,7 @@ const AddColumnModal = ({ onClose }: ChildrenModalProps) => {
         tags: tags,
         content: content,
       };
-      addColumn("pending", newColumn);
+      addColumn(newColumn);
       onClose();
     }
   };

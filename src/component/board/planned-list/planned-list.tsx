@@ -10,7 +10,7 @@ import { useState } from "react";
 const PlannedList = () => {
   const state: StateType = "planned";
 
-  const { projectBoard, moveColumn } = useKanStore();
+  const { projectBoard, moveCard } = useKanStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const plannedCount = (projectBoard?.columns?.planned || []).length;
 
@@ -32,8 +32,24 @@ const PlannedList = () => {
     const columnId = e.dataTransfer.getData("columnId");
     const fromState = e.dataTransfer.getData("fromState") as StateType;
 
-    if (fromState === state) return;
-    moveColumn(fromState, state, columnId);
+    const container = e.currentTarget as HTMLElement;
+    const cards = container.querySelectorAll(".card");
+    const dropY = e.clientY;
+
+    let dropIndex = projectBoard.columns[state].length;
+
+    for (let i = 0; i < cards.length; i++) {
+      const card = cards[i];
+      const rect = card.getBoundingClientRect();
+      const cardMiddle = rect.top + rect.height / 2;
+
+      if (dropY < cardMiddle) {
+        dropIndex = i;
+        break;
+      }
+    }
+
+    moveCard(fromState, state, columnId, dropIndex);
   };
 
   return (

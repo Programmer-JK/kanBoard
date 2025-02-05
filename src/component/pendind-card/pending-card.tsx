@@ -26,7 +26,6 @@ const PendingCard = ({ column }: CardProps) => {
     bg-white rounded-md 
     shadow-md shadow-black/40
     "
-        onClick={openCreateColumnHandler}
       >
         <div className="flex flex-row justify-between w-full">
           <div
@@ -38,7 +37,10 @@ const PendingCard = ({ column }: CardProps) => {
           </div>
           <X size={16} onClick={handleDeleteColumn} />
         </div>
-        <div className="w-full flex flex-col items-start">
+        <div
+          className="w-full flex flex-col items-start"
+          onClick={openCreateColumnHandler}
+        >
           <div className="flex flex-wrap whitespace-nowrap">
             {column.tags &&
               column.tags.map((item: TagTypes) => (
