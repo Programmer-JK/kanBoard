@@ -1,5 +1,5 @@
 import { useState } from "react";
-import UserProfile from "@/assets/svg/UserProfile.svg?react";
+import UserProfile from "@/assets/svg/userprofile.svg";
 
 function HeaderUser() {
   const list = ["박종권", "User", "김철수"];

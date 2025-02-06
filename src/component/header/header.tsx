@@ -1,5 +1,4 @@
-// 방법 1: 임포트할 때 이름 변경
-import BTheEggImage from "@/assets/svg/BTheEgg.svg?react";
+import BTheEggImage from "@/assets/svg/btheegg.svg";
 import HeaderUser from "./header-user/header-user";
 
 function Header() {
@@ -11,7 +10,7 @@ function Header() {
         md:justify-between text-black
       "
     >
-      <BTheEggImage className="hidden md:block" />
+      <BTheEggImage />
       <HeaderUser />
     </header>
   );
