@@ -50,7 +50,8 @@ const PlannedList = () => {
 
   return (
     <div
-      className="col-span-1 bg-green-300 p-2"
+      className="droppable-list col-span-1 bg-green-300 p-2"
+      data-state={curState}
       onDragOver={dragOverHandler}
       onDrop={dropHandler}
     >

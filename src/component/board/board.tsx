@@ -1,5 +1,5 @@
 import { PencilLine } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
 import { useKanStore } from "@/store/store";
 import PlannedList from "./planned-list/planned-list";
 import OngoingList from "./ongoing-list/ongoing-list";
@@ -10,9 +10,11 @@ const Board = () => {
   const { projectBoard, setStoreProjectName } = useKanStore();
   const [projectName, setProjectName] = useState(projectBoard.name);
   const [availableChange, setAvailableChange] = useState(false);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const changeProjectNameHandler = (e) => {
+  const changeProjectNameHandler = (e: {
+    target: { value: SetStateAction<string> };
+  }) => {
     console.log(e.target.value);
     setProjectName(e.target.value);
   };

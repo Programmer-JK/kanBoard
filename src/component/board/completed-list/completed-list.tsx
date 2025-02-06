@@ -48,7 +48,8 @@ const CompletedList = () => {
 
   return (
     <div
-      className="col-span-1 bg-red-300 p-2"
+      className="droppable-list col-span-1 bg-red-300 p-2"
+      data-state={curState}
       onDragOver={dragOverHandler}
       onDrop={dropHandler}
     >
@@ -81,10 +82,12 @@ const CompletedList = () => {
           <Plus size={16} />
         </button>
       </div>
-      {completedCount !== 0 &&
-        projectBoard.columns.completed.map((column) => (
-          <Card key={column.id} column={column}></Card>
-        ))}
+      <div className="min-h-10">
+        {completedCount !== 0 &&
+          projectBoard.columns.completed.map((column) => (
+            <Card key={column.id} column={column}></Card>
+          ))}
+      </div>
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <AddCardModal onClose={() => {}} targetState={curState} />

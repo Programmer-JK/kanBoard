@@ -48,14 +48,15 @@ const OngoingList = () => {
 
   return (
     <div
-      className="col-span-1 bg-blue-300 p-2"
+      className="droppable-list col-span-1 bg-blue-300 p-2"
+      data-state={curState}
       onDragOver={dragOverHandler}
       onDrop={dropHandler}
     >
       <div
         className="
           flex flex-row justify-between items-center 
-          w-full my-1 p-2 
+          w-full my-1 p-2
           text-xl font-bold
         "
       >
@@ -81,11 +82,12 @@ const OngoingList = () => {
           <Plus size={16} />
         </button>
       </div>
-
-      {onGoingCount !== 0 &&
-        projectBoard.columns.ongoing.map((column) => (
-          <Card key={column.id} column={column}></Card>
-        ))}
+      <div className="min-h-10">
+        {onGoingCount !== 0 &&
+          projectBoard.columns.ongoing.map((column) => (
+            <Card key={column.id} column={column}></Card>
+          ))}
+      </div>
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <AddCardModal onClose={() => {}} targetState={curState} />
