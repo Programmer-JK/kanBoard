@@ -48,7 +48,7 @@ const CompletedList = () => {
 
   return (
     <div
-      className="droppable-list col-span-1 bg-red-300 p-2"
+      className="droppable-list col-span-1 p-2"
       data-state={curState}
       onDragOver={dragOverHandler}
       onDrop={dropHandler}
