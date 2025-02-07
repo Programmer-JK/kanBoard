@@ -1,50 +1,113 @@
-# React + TypeScript + Vite
+# Kanban Board Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+간단하고 효율적인 칸반 보드 프로젝트입니다. 프로젝트 관리와 작업 진행 상황을 시각적으로 추적할 수 있습니다.
 
-Currently, two official plugins are available:
+## 목차
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [프로젝트 개요](#프로젝트-개요)
+- [주요 기능](#주요-기능)
+- [기술 스택](#기술-스택)
+- [프로젝트 구조](#프로젝트-구조)
+- [설치 및 실행](#설치-및-실행)
+- [구현 상세](#구현-상세)
 
-## Expanding the ESLint configuration
+## 프로젝트 개요
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+이 프로젝트는 직관적인 드래그 앤 드롭 기능을 갖춘 칸반 보드를 구현한 것으로, 사용자가 태스크를 효과적으로 관리할 수 있도록 도와줍니다.
 
-- Configure the top-level `parserOptions` property like this:
+## 주요 기능
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 기본 기능
+
+- ✅ 프로젝트 제목 수정
+- ✅ 컬럼 추가 및 삭제 (기본 컬럼 보호)
+- ✅ 카드 관리 (추가/수정/삭제)
+- ✅ 드래그 앤 드롭으로 카드 이동
+- ✅ 로컬 스토리지를 통한 상태 저장
+- ✅ 반응형 디자인 지원
+
+### 추가 기능
+
+- 태그 관리 시스템 (8가지 색상 지원)
+- 애니메이션 효과
+  - 드래그 시 부드러운 이동 (모바일)
+
+## 기술 스택
+
+- React + TypeScript + Zustand
+- Vite
+- tailwindCSS (반응형 디자인)
+- Local Storage
+
+## 프로젝트 구조
+
+```
+src/
+├── assets/              # 정적 자원 (이미지, 글로벌 CSS)
+├── component/
+│   ├── add_card/       # 카드 추가 컴포넌트
+│   ├── board/          # 보드 관련 컴포넌트
+│   ├── card/           # 카드 컴포넌트
+│   ├── card_info-modal/# 카드 정보 모달
+│   ├── color-picker/   # 색상 선택기
+│   ├── header/         # 헤더 컴포넌트
+│   ├── modal/          # 모달 관련 컴포넌트
+│   └── pending-card/   # 대기 상태 카드
+├── const/              # 상수 정의
+├── store/              # 상태 관리
+├── type/               # TypeScript 타입 정의
+└── util/               # 유틸리티 함수
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 설치 및 실행
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+```bash
+# 의존성 설치
+npm install
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+# 개발 서버 실행
+npm run dev
+
+# 빌드
+npm run build
+
+# 린트 검사
+npm run lint
+
+# 빌드 프리뷰
+npm run preview
 ```
+
+## 구현 상세
+
+### 상태 관리 구조
+
+```typescript
+projectBoard: {
+  name: "",
+  columns: {
+    pending: [],
+    planned: [],
+    ongoing: [],
+    completed: [],
+  },
+}
+```
+
+### 작업 상태 구분
+
+- pending: 컬럼에만 있는 경우
+- planned: 시작 전
+- ongoing: 진행 중
+- completed: 완료
+
+### 사용자 인터페이스
+
+- 카드 클릭 시 수정/삭제 팝업 표시
+- 직관적인 드래그 앤 드롭 인터페이스
+- 8가지 색상을 지원하는 태그 시스템
+
+### 반응형 디자인
+
+- 모바일, 태블릿, 데스크톱 해상도 지원
+- 자연스러운 UI 레이아웃 조정
