@@ -6,7 +6,7 @@ const AddCard = ({ onClick }: AddCardProps) => {
     <button
       className="
         flex flex-col break-words justify-center 
-        items-center w-full h-32 gap-2 my-1 p-2 
+        items-center w-full h-32 gap-2 my-3 p-2 
       bg-white rounded-md 
         shadow-md shadow-black/40
       "

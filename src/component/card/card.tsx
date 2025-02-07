@@ -13,8 +13,8 @@ interface TouchRef {
   initialScrollY: number;
   width: number;
   height: number;
-  offsetX: number; // 추가: 터치 포인트와 요소 경계 사이의 X 오프셋
-  offsetY: number; // 추가: 터치 포인트와 요소 경계 사이의 Y 오프셋
+  offsetX: number;
+  offsetY: number;
   currentElement: HTMLElement | null;
   clone: HTMLElement | null;
   scrollInterval: number | null;
@@ -44,12 +44,12 @@ const Card = ({ column }: CardProps) => {
     }
   };
 
-  const handleDragStart = (e: React.DragEvent) => {
+  const dragStartHandler = (e: React.DragEvent) => {
     e.dataTransfer.setData("columnId", column.id);
     e.dataTransfer.setData("fromState", column.state);
   };
 
-  const handleTouchStart = (e: React.TouchEvent) => {
+  const touchStartHandler = (e: React.TouchEvent) => {
     if (touchRef.current.scrollInterval) {
       clearInterval(touchRef.current.scrollInterval);
     }
@@ -94,9 +94,8 @@ const Card = ({ column }: CardProps) => {
     setIsDragging(true);
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
+  const touchMoveHandler = (e: React.TouchEvent) => {
     if (!touchRef.current.clone) return;
-    // e.preventDefault(); // 드래그 중 스크롤 방지
 
     const touch = e.touches[0];
     const EDGE_THRESHOLD = 80;
@@ -178,7 +177,7 @@ const Card = ({ column }: CardProps) => {
     }
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
+  const touchEndHandler = (e: React.TouchEvent) => {
     if (touchRef.current.scrollInterval) {
       clearInterval(touchRef.current.scrollInterval);
     }
@@ -281,10 +280,10 @@ const Card = ({ column }: CardProps) => {
         "
         onClick={openCreateColumnHandler}
         draggable={!isMobile}
-        onDragStart={handleDragStart}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
+        onDragStart={dragStartHandler}
+        onTouchStart={touchStartHandler}
+        onTouchMove={touchMoveHandler}
+        onTouchEnd={touchEndHandler}
       >
         <X size={16} onClick={handleDeleteCard} className="mb-0.5" />
         <div className="w-full">
