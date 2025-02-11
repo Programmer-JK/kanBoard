@@ -1,4 +1,4 @@
-import BTheEggImage from "@/assets/svg/btheegg.svg";
+import LogoImage from "@/assets/svg/logo.svg";
 import HeaderUser from "./header-user/header-user";
 
 function Header() {
@@ -10,7 +10,7 @@ function Header() {
         md:justify-between text-black
       "
     >
-      <BTheEggImage />
+      <LogoImage className="w-10 h-10" />
       <HeaderUser />
     </header>
   );

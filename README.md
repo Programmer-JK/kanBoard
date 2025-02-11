@@ -32,7 +32,7 @@
 - ✅ 애니메이션 효과
   - 드래그 시 부드러운 이동 (모바일)
 - ✅ 페이지 배포
-  - nginx 서버 배포 (http://81.testdomain.co.kr/bTheEgg/)
+  - nginx 서버 배포 (http://81.testdomain.co.kr/kanboard/)
 
 ## 기술 스택
 
